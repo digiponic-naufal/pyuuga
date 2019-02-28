@@ -1,9 +1,16 @@
-package pyuuga.digiponic.com.view;
+package pyuuga.digiponic.com.view.ui;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,10 +21,41 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pyuuga.digiponic.com.R;
+import pyuuga.digiponic.com.model.CategoryData;
+import pyuuga.digiponic.com.model.InvoiceData;
+import pyuuga.digiponic.com.model.MenuData;
+import pyuuga.digiponic.com.view.adapter.CategoryAdapter;
+import pyuuga.digiponic.com.view.adapter.InvoiceAdapter;
+import pyuuga.digiponic.com.view.adapter.MenuAdapter;
+import pyuuga.digiponic.com.viewmodel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    // Content
+    private RecyclerView category_rv;
+    private RecyclerView menu_rv;
+    private RecyclerView invoice_rv;
+
+    // Adapter
+    private CategoryAdapter categoryAdapter;
+    private MenuAdapter menuAdapter;
+    private InvoiceAdapter invoiceAdapter;
+
+    // Dataset
+    private List<CategoryData> mCategoryData = new ArrayList<>();
+    private List<MenuData> mMenuData = new ArrayList<>();
+    private List<InvoiceData> mInvoiceData = new ArrayList<>();
+
+    // View Model
+    private MainActivityViewModel mMainActivityViewModel;
+
+    // Utils
+    private int PAGE_STATE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +74,46 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+
+        mMainActivityViewModel.init();
+
+        mMainActivityViewModel.getCategoryData().observe(this, new Observer<List<CategoryData>>() {
+            @Override
+            public void onChanged(@Nullable List<CategoryData> categoryData) {
+                categoryAdapter.notifyDataSetChanged();
+            }
+        });
+
+        // Setup Recyclerview
+        setAdapterRV();
+
+    }
+
+    private void setAdapterRV() {
+        // Category Adapter
+        category_rv = findViewById(R.id.rv_category);
+        category_rv.setLayoutManager(new LinearLayoutManager(this));
+        categoryAdapter = new CategoryAdapter(this, mMainActivityViewModel.getCategoryData().getValue());
+        categoryAdapter.notifyDataSetChanged();
+        category_rv.setAdapter(categoryAdapter);
+
+        // Menu Adapter
+        menu_rv = findViewById(R.id.menu_rv);
+        int ColumnCount = 3;
+        menu_rv.setLayoutManager(new GridLayoutManager(this, ColumnCount));
+        menuAdapter = new MenuAdapter(this, mMainActivityViewModel.getMenuData().getValue());
+        menuAdapter.notifyDataSetChanged();
+        menu_rv.setAdapter(menuAdapter);
+
+        // Invoice Adapter
+        invoice_rv = findViewById(R.id.rv_invoice);
+        invoice_rv.setLayoutManager(new LinearLayoutManager(this));
+        invoiceAdapter = new InvoiceAdapter(this, mMainActivityViewModel.getInvoiceData().getValue());
+        invoiceAdapter.notifyDataSetChanged();
+        invoice_rv.setAdapter(invoiceAdapter);
+
     }
 
     @Override

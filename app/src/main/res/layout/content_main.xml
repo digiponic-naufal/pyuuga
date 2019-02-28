@@ -5,13 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
+    tools:context=".view.ui.MainActivity"
+    android:background="@color/colorWhite"
     tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
         android:id="@+id/layout_category"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_category"
@@ -20,6 +25,38 @@
 
         </android.support.v7.widget.RecyclerView>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_menu"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toRightOf="@id/layout_category"
+        app:layout_constraintRight_toLeftOf="@id/layout_invoice"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:padding="20dp"
+            android:id="@+id/menu_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_invoice"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_invoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 
