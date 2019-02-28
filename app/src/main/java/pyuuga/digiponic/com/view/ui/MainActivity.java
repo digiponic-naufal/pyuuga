@@ -1,4 +1,4 @@
-package pyuuga.digiponic.com;
+package pyuuga.digiponic.com.view;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import pyuuga.digiponic.com.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
