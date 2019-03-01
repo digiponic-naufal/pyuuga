@@ -9,4 +9,6 @@
     <string name="category">Category</string>
     <string name="item_name">Item Name</string>
     <string name="item_price">Item Price</string>
+    <string name="bayar">Bayar</string>
+    <string name="total">Total</string>
 </resources>

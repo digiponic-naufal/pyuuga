@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".view.ui.MainActivity"
-    android:background="@color/colorWhite"
     tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
@@ -29,35 +29,91 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/divider_category_menu"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorGreyTransparent_20"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toRightOf="@id/layout_category"
+        app:layout_constraintRight_toLeftOf="@id/layout_menu"></LinearLayout>
+
+    <LinearLayout
         android:id="@+id/layout_menu"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_constraintLeft_toRightOf="@id/layout_category"
-        app:layout_constraintRight_toLeftOf="@id/layout_invoice"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintLeft_toRightOf="@id/divider_category_menu"
+        app:layout_constraintRight_toLeftOf="@id/layout_invoice">
 
         <android.support.v7.widget.RecyclerView
-            android:padding="20dp"
             android:id="@+id/menu_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:padding="20dp"></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/divider_menu_invoice"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorGreyTransparent_20"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toRightOf="@id/layout_menu"
+        app:layout_constraintRight_toLeftOf="@id/layout_invoice"></LinearLayout>
+
+    <RelativeLayout
         android:id="@+id/layout_invoice"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="320dp"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintRight_toRightOf="parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_invoice"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_checkout">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="10dp"
+                android:text="@string/total"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/text_24_sp" />
+
+            <TextView
+                android:id="@+id/text_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="10dp"
+                android:text="Rp 0"
+                android:textAlignment="textEnd"
+                android:textSize="@dimen/text_24_sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_checkout"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:padding="30dp"
+            android:text="@string/bayar"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_24_sp" />
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
