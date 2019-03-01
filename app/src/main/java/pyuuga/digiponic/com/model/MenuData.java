@@ -2,11 +2,12 @@ package pyuuga.digiponic.com.model;
 
 public class MenuData {
 
-    int id;
+    int id, stock;
     String name, price, category, image;
 
-    public MenuData(int id, String name, String price, String category, String image) {
+    public MenuData(int id, int stock, String name, String price, String category, String image) {
         this.id = id;
+        this.stock = stock;
         this.name = name;
         this.price = price;
         this.category = category;

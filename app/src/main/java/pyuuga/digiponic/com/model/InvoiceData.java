@@ -3,12 +3,13 @@ package pyuuga.digiponic.com.model;
 public class InvoiceData {
 
     private String name, price;
-    private int count = 0;
+    private int id, count;
 
-    public InvoiceData(String name, String price, int count) {
+    public InvoiceData(int id, String name, String price) {
         this.name = name;
         this.price = price;
-        this.count = count;
+        this.id = id;
+        this.count = 0;
     }
 
     public String getName() {
@@ -25,6 +26,14 @@ public class InvoiceData {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCount() {

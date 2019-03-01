@@ -28,8 +28,8 @@ public class InvoiceRepository {
     }
 
     private void setData() {
-        dataSet.add(new InvoiceData("TestName", "TestPrice", 0));
-        dataSet.add(new InvoiceData("TestName1", "TestPrice1", 1));
-        dataSet.add(new InvoiceData("TestName2", "TestPrice2", 2));
+//        dataSet.add(new InvoiceData(0, "TestName", "TestPrice"));
+//        dataSet.add(new InvoiceData(1, "TestName1", "TestPrice1"));
+//        dataSet.add(new InvoiceData(2, "TestName2", "TestPrice2"));
     }
 }

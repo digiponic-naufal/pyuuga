@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import pyuuga.digiponic.com.R;
 import pyuuga.digiponic.com.model.InvoiceData;
@@ -19,6 +21,8 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
 
     private Context mContext;
     private List<InvoiceData> mDataInvoice;
+    private Locale localeID = new Locale("in", "ID");
+    private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
 
     public InvoiceAdapter(Context mContext, List<InvoiceData> mDataInvoice) {
         this.mContext = mContext;
@@ -37,7 +41,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         InvoiceData data = mDataInvoice.get(i);
         viewHolder._invoiceName.setText(data.getName());
-        viewHolder._invoicePrice.setText(data.getPrice());
+        viewHolder._invoicePrice.setText("Rp. " + data.getPrice());
         viewHolder._invoiceCount.setText(String.valueOf(data.getCount()));
     }
 

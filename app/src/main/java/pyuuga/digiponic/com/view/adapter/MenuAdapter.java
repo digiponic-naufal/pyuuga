@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import pyuuga.digiponic.com.R;
 import pyuuga.digiponic.com.model.MenuData;
@@ -23,6 +25,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     private Context mContext;
     private List<MenuData> mDatamenu;
     RecyclerViewHelper.ItemClickListener mClickListener;
+    private Locale localeID = new Locale("in", "ID");
+    private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
 
     public MenuAdapter(Context mContext, List<MenuData> mDatamenu) {
         this.mContext = mContext;
@@ -42,14 +46,29 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         MenuData data = mDatamenu.get(i);
         viewHolder._menuName.setText(data.getName());
-        viewHolder._menuPrice.setText(data.getPrice());
-        viewHolder._cardView.setElevation(5f);
-        viewHolder._cardView.setTranslationZ(5f);
+        viewHolder._menuPrice.setText("Rp " + data.getPrice());
+        viewHolder._menuImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.cotton_candy_logo));
     }
 
     @Override
     public int getItemCount() {
         return mDatamenu.size();
+    }
+
+    public String getItemName(int position) {
+        return String.valueOf(mDatamenu.get(position).getName());
+    }
+
+    public String getItemPrice(int position) {
+        return String.valueOf(mDatamenu.get(position).getPrice());
+    }
+
+    public int getItemID(int position) {
+        return mDatamenu.get(position).getId();
+    }
+
+    public void setClickListener(RecyclerViewHelper.ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

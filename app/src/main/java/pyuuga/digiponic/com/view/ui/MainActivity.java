@@ -20,26 +20,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import pyuuga.digiponic.com.R;
 import pyuuga.digiponic.com.model.CategoryData;
 import pyuuga.digiponic.com.model.InvoiceData;
 import pyuuga.digiponic.com.model.MenuData;
+import pyuuga.digiponic.com.utils.RecyclerViewHelper;
 import pyuuga.digiponic.com.view.adapter.CategoryAdapter;
 import pyuuga.digiponic.com.view.adapter.InvoiceAdapter;
 import pyuuga.digiponic.com.view.adapter.MenuAdapter;
 import pyuuga.digiponic.com.viewmodel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, RecyclerViewHelper.ItemClickListener {
 
     // Content
     private RecyclerView category_rv;
     private RecyclerView menu_rv;
     private RecyclerView invoice_rv;
+    private TextView total_harga;
 
     // Adapter
     private CategoryAdapter categoryAdapter;
@@ -56,6 +62,8 @@ public class MainActivity extends AppCompatActivity
 
     // Utils
     private int PAGE_STATE = 1;
+    private Locale localeID = new Locale("in", "ID");
+    private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        total_harga = findViewById(R.id.text_total);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -86,6 +96,22 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        mMainActivityViewModel.getInvoiceData().observe(this, new Observer<List<InvoiceData>>() {
+            @Override
+            public void onChanged(@Nullable List<InvoiceData> invoiceData) {
+                invoiceAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mMainActivityViewModel.getTotalHarga().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                total_harga.setText(String.valueOf(mMainActivityViewModel.getTotalHarga().getValue()));
+            }
+        });
+
+
+
         // Setup Recyclerview
         setAdapterRV();
 
@@ -105,6 +131,7 @@ public class MainActivity extends AppCompatActivity
         menu_rv.setLayoutManager(new GridLayoutManager(this, ColumnCount));
         menuAdapter = new MenuAdapter(this, mMainActivityViewModel.getMenuData().getValue());
         menuAdapter.notifyDataSetChanged();
+        menuAdapter.setClickListener(this);
         menu_rv.setAdapter(menuAdapter);
 
         // Invoice Adapter
@@ -171,5 +198,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, position + "", Toast.LENGTH_SHORT).show();
+        mMainActivityViewModel.addItemToInvoice(new InvoiceData(menuAdapter.getItemID(position), menuAdapter.getItemName(position), menuAdapter.getItemPrice(position)));
+        invoiceAdapter.notifyDataSetChanged();
     }
 }

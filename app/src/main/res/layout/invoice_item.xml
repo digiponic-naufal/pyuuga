@@ -34,7 +34,8 @@
                     android:layout_height="match_parent"
                     android:text="1"
                     android:textColor="@color/colorWhite"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    />
             </RelativeLayout>
 
 
@@ -55,7 +56,8 @@
                 android:text="Item Price"
                 android:layout_gravity="center"
                 android:textAlignment="textEnd"
-                tools:ignore="RtlCompat" />
+                tools:ignore="RtlCompat"
+                android:layout_marginRight="5dp"/>
 
         </LinearLayout>
 

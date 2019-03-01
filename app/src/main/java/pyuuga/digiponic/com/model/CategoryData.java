@@ -2,27 +2,20 @@ package pyuuga.digiponic.com.model;
 
 public class CategoryData {
 
-    private String id, name;
+    private int id;
+    private String name;
     private boolean selected;
 
-    public CategoryData(String id, String name) {
+    public CategoryData(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -32,5 +25,13 @@ public class CategoryData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
